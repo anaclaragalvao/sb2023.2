@@ -1,0 +1,51 @@
+/*
+int bemboba (int num) {
+ int local[4];
+ int *a;
+ int i;
+
+
+ for (i=0,a=local;i<4;i++) {
+   *a = num;
+   a++;
+ }
+ return addl (local, 4);
+}*/
+
+
+.text
+.globl bemboba
+bemboba:
+
+
+/*prologo*/
+   pushq %rbp
+   movq %rsp, %rbp
+   subq $16, %rbp
+
+
+   movl $0, %r9d/*i=0*/
+   movq -16(%rbp), %r8
+
+
+L1:
+   cmpl $4, %r9d
+   jge fora_for
+
+
+   movl %edi, (%r8) /* *a = num */
+   addq $4, %r8 /* a++ */
+
+
+   incl %r9d /* i++ */
+   jmp L1
+
+
+fora_for:
+   leaq -16(%rbp), %rdi
+   movl $4, %esi
+   call addl
+
+
+   leave
+   ret
